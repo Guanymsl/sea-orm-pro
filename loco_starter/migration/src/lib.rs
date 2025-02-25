@@ -6,6 +6,7 @@ mod m20220101_000001_users;
 mod m20231103_114510_notes;
 mod m20240520_173001_files;
 mod m20250101_000002_seed_user;
+mod m20250208_105910_create_table;
 
 pub struct Migrator;
 
@@ -17,6 +18,7 @@ impl MigratorTrait for Migrator {
             Box::new(m20231103_114510_notes::Migration),
             Box::new(m20240520_173001_files::Migration),
             Box::new(m20250101_000002_seed_user::Migration),
+            Box::new(m20250208_105910_create_table::Migration),
         ]
     }
 }
