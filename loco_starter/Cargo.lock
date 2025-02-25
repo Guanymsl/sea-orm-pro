@@ -2649,6 +2649,7 @@ dependencies = [
  "async-trait",
  "axum",
  "chrono",
+ "dotenvy",
  "eyre",
  "include_dir",
  "insta",

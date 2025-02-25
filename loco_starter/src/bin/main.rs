@@ -6,6 +6,10 @@ use migration::Migrator;
 async fn main() -> eyre::Result<()> {
     dotenvy::dotenv().ok();
 
+    let mysql_host = var("DATABASE_URL").expect("DATABASE_URL is not set");
+    println!("MySQL Host: {}", mysql_host);
+    Database::connect(mysql_host.as_str()).await?;
+
     cli::main::<App, Migrator>().await?;
     Ok(())
 }
