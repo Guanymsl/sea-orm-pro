@@ -1,6 +1,7 @@
 use loco_rs::cli;
 use loco_starter::app::App;
 use migration::Migrator;
+use sea_orm::Database;
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
