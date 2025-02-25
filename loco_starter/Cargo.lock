@@ -4137,6 +4137,8 @@ dependencies = [
 [[package]]
 name = "sea-orm-pro"
 version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e545da306ce12368c67df7fa8d0a657adc885eaa4022532a460fd5161866ab5a"
 dependencies = [
  "anyhow",
  "indexmap",
