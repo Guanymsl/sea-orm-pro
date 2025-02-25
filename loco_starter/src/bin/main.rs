@@ -4,6 +4,8 @@ use migration::Migrator;
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
+    dotenvy::dotenv().ok();
+
     cli::main::<App, Migrator>().await?;
     Ok(())
 }
