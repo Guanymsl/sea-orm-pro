@@ -55,7 +55,6 @@ impl Hooks for App {
     }
 
     fn register_tasks(tasks: &mut Tasks) {
-        // Register all tasks
         tasks.register(tasks::seed::SeedData);
     }
 

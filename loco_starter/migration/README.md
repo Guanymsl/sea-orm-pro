@@ -1,9 +1,5 @@
 # Running Migrator CLI
 
-- Generate a new migration file
-    ```sh
-    cargo run -- migrate generate MIGRATION_NAME
-    ```
 - Apply all pending migrations
     ```sh
     cargo run
