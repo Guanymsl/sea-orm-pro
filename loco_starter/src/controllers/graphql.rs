@@ -8,10 +8,11 @@ use crate::graphql::query_root;
 
 async fn graphql_playground() -> Result<Response> {
     // Setup GraphQL playground web and specify the endpoint for GraphQL resolver
-    let config = GraphQLPlaygroundConfig::new("/api/graphql").with_header("Authorization", "");
+    let config =
+        GraphQLPlaygroundConfig::new("/api/graphql").with_header("Authorization", "AUTO_TOKEN");
 
     let res = playground_source(config).replace(
-        r#""Authorization":"""#,
+        r#""Authorization":"AUTO_TOKEN""#,
         r#""Authorization":`Bearer ${localStorage.getItem('auth_token')}`"#,
     );
 

@@ -1,14 +1,18 @@
-use axum::debug_handler;
 use loco_rs::prelude::*;
 
-use crate::{models::_entities::users, views::user::CurrentResponse};
-
-#[debug_handler]
-async fn current(auth: auth::JWT, State(ctx): State<AppContext>) -> Result<Response> {
-    let user = users::Model::find_by_pid(&ctx.db, &auth.claims.pid).await?;
-    format::json(CurrentResponse::new(&user))
+async fn current(auth: auth::JWT, State(_ctx): State<AppContext>) -> Result<Response> {
+    // Give the JWT is valid, return the user profile
+    format::json(serde_json::json!({
+        "pid": auth.claims.pid,
+        "name": auth.claims.pid,
+        "email": auth.claims.pid,
+    }))
 }
 
 pub fn routes() -> Routes {
-    Routes::new().prefix("user").add("/current", get(current))
+    Routes::new()
+        // User route prefix
+        .prefix("user")
+        // Fetch user profile
+        .add("/current", get(current))
 }

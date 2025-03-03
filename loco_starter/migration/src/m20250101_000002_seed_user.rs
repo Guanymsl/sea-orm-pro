@@ -1,4 +1,4 @@
-use super::m20220101_000001_users::Users;
+use super::m20250101_000001_user::User;
 use sea_orm_migration::prelude::*;
 use uuid::Uuid;
 
@@ -9,13 +9,13 @@ pub struct Migration;
 impl MigrationTrait for Migration {
     async fn up(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         let insert = Query::insert()
-            .into_table(Users::Table)
+            .into_table(User::Table)
             .columns([
-                Users::Pid,
-                Users::Email,
-                Users::Password,
-                Users::ApiKey,
-                Users::Name,
+                User::Pid,
+                User::Email,
+                User::Password,
+                User::ApiKey,
+                User::Name,
             ])
             .values_panic([
                 Uuid::new_v4().into(),

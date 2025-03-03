@@ -3,23 +3,17 @@ use std::path::Path;
 use async_trait::async_trait;
 use loco_rs::{
     app::{AppContext, Hooks},
-    bgworker::{BackgroundWorker, Queue},
+    bgworker::Queue,
     boot::{create_app, BootResult, StartMode},
     config::Config,
     controller::AppRoutes,
-    db::{self, truncate_table},
     environment::Environment,
     task::Tasks,
     Result,
 };
 use migration::Migrator;
 
-use crate::{
-    controllers,
-    models::_entities::{notes, users},
-    tasks,
-    workers::downloader::DownloadWorker,
-};
+use crate::{controllers, tasks};
 
 pub struct App;
 #[async_trait]
@@ -47,36 +41,29 @@ impl Hooks for App {
     }
 
     fn routes(_ctx: &AppContext) -> AppRoutes {
+        // Register all routes
         AppRoutes::with_default_routes()
             .prefix("/api")
-            .add_route(controllers::notes::routes())
             .add_route(controllers::auth::routes())
             .add_route(controllers::user::routes())
-            .add_route(controllers::files::routes())
             .add_route(controllers::graphql::routes())
             .add_route(controllers::admin::routes())
     }
 
-    async fn connect_workers(ctx: &AppContext, queue: &Queue) -> Result<()> {
-        queue.register(DownloadWorker::build(ctx)).await?;
+    async fn connect_workers(_ctx: &AppContext, _queue: &Queue) -> Result<()> {
         Ok(())
     }
 
     fn register_tasks(tasks: &mut Tasks) {
+        // Register all tasks
         tasks.register(tasks::seed::SeedData);
     }
 
-    async fn truncate(ctx: &AppContext) -> Result<()> {
-        let db = &ctx.db;
-        truncate_table(db, users::Entity).await?;
-        truncate_table(db, notes::Entity).await?;
+    async fn truncate(_ctx: &AppContext) -> Result<()> {
         Ok(())
     }
 
-    async fn seed(ctx: &AppContext, base: &Path) -> Result<()> {
-        let db = &ctx.db;
-        db::seed::<users::ActiveModel>(db, &base.join("users.yaml").display().to_string()).await?;
-        db::seed::<notes::ActiveModel>(db, &base.join("notes.yaml").display().to_string()).await?;
+    async fn seed(_ctx: &AppContext, _base: &Path) -> Result<()> {
         Ok(())
     }
 }
