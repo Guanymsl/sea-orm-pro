@@ -20,7 +20,7 @@ impl LoginResponse {
     pub fn new(user: &user::Model, token: &String) -> Self {
         Self {
             token: token.to_string(),
-            pid: user.pid.to_string(),
+            pid: format!("{:?}", user.pid),
             name: user.name.clone(),
             is_verified: true,
         }

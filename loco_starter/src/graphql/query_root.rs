@@ -13,7 +13,7 @@ use std::{env, sync::Arc};
 
 lazy_static::lazy_static! {
     static ref CONTEXT: BuilderContext = BuilderContext::default();
-    static ref DEMO_SITE: bool = env::var_os("DEMO_SITE").unwrap_or_default() == "true";
+    static ref DEMO_SITE: bool = env::var_os("DEMO_SITE").unwrap_or_default() == "false";
 }
 
 pub fn schema(
