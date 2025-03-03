@@ -1,23 +1,8 @@
-use async_graphql::http::{playground_source, GraphQLPlaygroundConfig};
 use axum::{body::Body, extract::Request};
 use loco_rs::prelude::*;
-use seaography::async_graphql;
 use tower_service::Service;
 
 use crate::graphql::query_root;
-
-async fn graphql_playground() -> Result<Response> {
-    // Setup GraphQL playground web and specify the endpoint for GraphQL resolver
-    let config =
-        GraphQLPlaygroundConfig::new("/api/graphql").with_header("Authorization", "AUTO_TOKEN");
-
-    let res = playground_source(config).replace(
-        r#""Authorization":"AUTO_TOKEN""#,
-        r#""Authorization":`Bearer ${localStorage.getItem('auth_token')}`"#,
-    );
-
-    Ok(Response::new(res.into()))
-}
 
 async fn graphql_handler(
     _auth: auth::JWT,
@@ -41,8 +26,6 @@ pub fn routes() -> Routes {
     Routes::new()
         // GraphQL route prefix
         .prefix("graphql")
-        // Serving the GraphQL playground web
-        .add("/", get(graphql_playground))
         // Handling GraphQL request
         .add("/", post(graphql_handler))
 }

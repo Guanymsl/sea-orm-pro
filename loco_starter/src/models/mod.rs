@@ -4,15 +4,6 @@ pub mod prelude;
 
 pub mod user;
 
-pub mod effect_list_data;
-pub mod logger;
-pub mod revision;
-pub mod sea_orm_active_enums;
-
 seaography::register_entity_modules!([
-    effect_list_data,
-    logger,
-    revision,
     user,
 ]);
-seaography::register_active_enums!([sea_orm_active_enums::Type]);

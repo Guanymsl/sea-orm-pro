@@ -13,7 +13,7 @@ use loco_rs::{
 };
 use migration::Migrator;
 
-use crate::{controllers, tasks};
+use crate::controllers;
 
 pub struct App;
 #[async_trait]
@@ -54,8 +54,8 @@ impl Hooks for App {
         Ok(())
     }
 
-    fn register_tasks(tasks: &mut Tasks) {
-        tasks.register(tasks::seed::SeedData);
+    fn register_tasks(_tasks: &mut Tasks) {
+
     }
 
     async fn truncate(_ctx: &AppContext) -> Result<()> {
